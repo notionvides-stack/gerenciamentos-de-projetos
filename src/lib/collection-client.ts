@@ -56,7 +56,7 @@ export async function saveCollection(draft: CollectionDraft, id?: CollectionRow[
 export function collectionAuth() {
   return getClient().auth;
 }
-export function authErrorMessage(error: { message: string; code?: string; status?: number }) {
+export function authErrorMessage(error: { message: string; code?: string | undefined; status?: number | undefined }) {
   const m = error.message.toLowerCase();
   if (m.includes('invalid login credentials')) return 'E-mail ou senha incorretos.';
   if (m.includes('email not confirmed')) return 'E-mail ainda não confirmado. Confirme pelo link enviado ou peça ao administrador.';
