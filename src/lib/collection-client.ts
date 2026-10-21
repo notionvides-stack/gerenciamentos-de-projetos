@@ -3,11 +3,16 @@ import { COLLECTION_URL, COLLECTION_TABLE, collectionColumns, collectionPayload,
 
 // Separate client: never reuse the managed Cloud key/session for the external project.
 let client: SupabaseClient | undefined;
+// Public (publishable) key of the external collection project; safe to ship in the browser bundle.
+const DEFAULT_COLLECTION_PUBLISHABLE_KEY = 'sb_publishable_HvY0eLzzSCajNz6gjfESNQ_PHV75Q07';
+function collectionKey(): string {
+  return (import.meta.env['VITE_COLLECTION_SUPABASE_PUBLISHABLE_KEY']?.trim() || DEFAULT_COLLECTION_PUBLISHABLE_KEY).trim();
+}
 export function hasCollectionConnection() {
-  return Boolean(import.meta.env['VITE_COLLECTION_SUPABASE_PUBLISHABLE_KEY']?.trim());
+  return Boolean(collectionKey());
 }
 function getClient() {
-  const key = import.meta.env['VITE_COLLECTION_SUPABASE_PUBLISHABLE_KEY']?.trim();
+  const key = collectionKey();
   if (!key) throw new Error('Falta a chave pública (anon ou publishable) do projeto externo. Configure VITE_COLLECTION_SUPABASE_PUBLISHABLE_KEY para conectar esta tabela. A conexão atual pertence a outro projeto e não foi utilizada.');
   if (!client) client = createClient(COLLECTION_URL, key, {
     auth: { storageKey: 'collection-external-auth', persistSession: true, autoRefreshToken: true },
