@@ -1,9 +1,10 @@
 # Roadmap — Gerenciador de Projeto
 
 ## Pedido atual — acompanhamento de coleção
-- [ ] Tela compacta com 19 colunas, busca, cadastro e edição sem exemplos.
-- [ ] Cliente isolado para a tabela externa existente, sem modificar o Cloud.
-- [ ] Verificar interface e testes; documentar credenciais/RLS pendentes.
+- [x] Tela compacta com 19 colunas, busca, cadastro e edição sem exemplos.
+- [x] Cliente isolado para a tabela externa existente, sem modificar o Cloud.
+- [x] Verificar interface e testes; documentar credenciais/RLS pendentes.
+- [ ] Verificar leitura/criação/edição reais — bloqueado pela ausência da chave pública externa; permissões RLS e eventual login externo ainda não verificáveis.
 
 ## Escopo anterior (fora do pedido atual)
 

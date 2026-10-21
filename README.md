@@ -8,7 +8,7 @@ Tela em `/`, com tabela de 19 colunas, pesquisa, cadastro e edição. Não há d
 
 A configuração existente é do Lovable Cloud, não do projeto externo solicitado. O novo cliente é isolado e não usa as credenciais ou sessões do Cloud.
 
-Configure a variável pública `VITE_COLLECTION_SUPABASE_PUBLISHABLE_KEY` com a chave **anon/publishable do projeto externo** nas variáveis de ambiente do aplicativo (localmente, `.env.local`; no ambiente hospedado, nas configurações de variáveis do projeto). Reinicie apenas o ambiente local após alterar variáveis. Essa chave é pública por definição; **nunca use service_role, sb_secret_ ou senha**. Nenhuma chave externa foi fornecida ou inventada.
+Configure a variável pública `VITE_COLLECTION_SUPABASE_PUBLISHABLE_KEY` com a chave **anon/publishable do projeto externo** (localmente, `.env.local`, sem sobrescrever a configuração gerenciada). Reinicie apenas o ambiente local após alterar variáveis. No Lovable, forneça somente a chave pública anon/publishable para que seja adicionada à configuração pública do cliente; não há confirmação de uma tela para variáveis VITE personalizadas, e Project Settings → Secrets não deve ser usado como substituto para configuração do navegador. Essa chave é pública por definição; **nunca use service_role, sb_secret_ ou senha**. Nenhuma chave externa foi fornecida ou inventada.
 
 O cliente acessa somente a tabela existente `public."Acompanhamento de coleção"`. A aplicação não altera dados em montagem e não cria schema. Leitura é paginada para evitar limitar a pesquisa aos primeiros registros.
 
