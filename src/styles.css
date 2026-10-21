@@ -62,20 +62,20 @@
 }
 
 :root {
-  --radius: 0.625rem;
+  --radius: 0.5rem;
   --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
+  --foreground: oklch(0.29 0.012 260);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.129 0.042 264.695);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
+  --primary: oklch(0.54 0.18 253);
   --primary-foreground: oklch(0.984 0.003 247.858);
   --secondary: oklch(0.968 0.007 247.896);
   --secondary-foreground: oklch(0.208 0.042 265.755);
   --muted: oklch(0.968 0.007 247.896);
   --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
+  --accent: oklch(0.96 0.018 250);
   --accent-foreground: oklch(0.208 0.042 265.755);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
@@ -140,5 +140,25 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: 'IBM Plex Sans', Arial, sans-serif;
+    letter-spacing: 0;
   }
 }
+
+.collection-sidebar { width: 232px; flex-shrink: 0; display: flex; flex-direction: column; background: var(--sidebar); border-right: 1px solid var(--border); min-height: 100dvh; }
+.collection-col { width: 148px; }
+.collection-col-wide { width: 225px; }
+.collection-col-photo { width: 90px; }
+.collection-grid { max-height: calc(100dvh - 340px); min-height: 345px; scrollbar-color: var(--border) var(--muted); }
+.collection-grid table { width: 2908px; }
+.collection-heading { background: var(--primary); color: var(--primary-foreground); position: sticky; top: 0; z-index: 1; height: 72px; }
+.collection-state { width: min(100%, calc(100vw - 300px)); position: sticky; left: 0; }
+.collection-app [role='alert'] > div { min-width: 0; }
+.collection-app [role='alert'] p { overflow-wrap: anywhere; }
+@media (max-width: 767px) {
+  .collection-sidebar { display: none; }
+  .collection-sidebar.is-open { display: flex; position: fixed; inset: 64px auto 0 0; z-index: 20; min-height: 0; }
+  .collection-state { width: calc(100vw - 42px); }
+  .collection-grid { max-height: 60dvh; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
