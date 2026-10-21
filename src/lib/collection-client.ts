@@ -52,4 +52,15 @@ export async function saveCollection(draft: CollectionDraft, id?: CollectionRow[
   if (error) throw requestError(error);
   if (!data) throw new Error('Nenhum registro retornado. Verifique as permissões de leitura após salvar.');
   return data as CollectionRow;
+}// Auth on the external collection project (same isolated client; never the Cloud session).
+export function collectionAuth() {
+  return getClient().auth;
+}
+export function authErrorMessage(error: { message: string; code?: string | undefined; status?: number | undefined }) {
+  const m = error.message.toLowerCase();
+  if (m.includes('invalid login credentials')) return 'E-mail ou senha incorretos.';
+  if (m.includes('email not confirmed')) return 'E-mail ainda não confirmado. Confirme pelo link enviado ou peça ao administrador.';
+  if (m.includes('rate limit') || error.status === 429) return 'Muitas tentativas. Aguarde alguns minutos e tente novamente.';
+  if (m.includes('failed to fetch') || m.includes('network')) return 'Sem conexão com o servidor de coleções. Verifique sua internet.';
+  return `Não foi possível entrar: ${error.message}`;
 }
