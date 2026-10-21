@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { AlertCircle, ArrowUpRight, Check, ChevronRight, FolderKanban, ImageIcon, Layers, Loader2, Menu, Plus, RefreshCw, Search, Table2, X } from 'lucide-react';
+import { AlertCircle, ArrowUpRight, Check, ChevronRight, FolderKanban, ImageIcon, Layers, Loader2, LogOut, Menu, Plus, RefreshCw, Search, Table2, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { collectionColumns, emptyDraft, formatCollectionDate, isDateColumn, matchesCollection, safePhotoUrl, type CollectionDraft, type CollectionRow } from '@/lib/collection';
+import { CollectionAuthGate } from '@/components/collection-auth-gate';
+import type { Session } from '@supabase/supabase-js';
 import { hasCollectionConnection, readCollections, saveCollection } from '@/lib/collection-client';
 
 function Photo({ value }: { value: string | null }) {
@@ -16,6 +18,10 @@ function Photo({ value }: { value: string | null }) {
 }
 
 export function CollectionScreen() {
+  return <CollectionAuthGate>{(session, signOut) => <CollectionContent session={session} signOut={signOut} />}</CollectionAuthGate>;
+}
+
+function CollectionContent({ session, signOut }: { session: Session; signOut: () => Promise<void> }) {
   const queryClient = useQueryClient();
   const query = useQuery({ queryKey: ['external-collections'], queryFn: readCollections, retry: false });
   const [search, setSearch] = useState('');
@@ -51,7 +57,7 @@ export function CollectionScreen() {
       <div className="mt-auto flex items-center gap-2 border-t p-5 text-xs text-muted-foreground"><span className="size-2 rounded-full bg-primary" /> Gerenciador de Projeto</div>
     </aside>
     <div className="min-w-0 flex-1">
-      <header className="flex h-16 items-center gap-3 border-b px-5 md:px-8"><Button variant="ghost" size="icon" className="md:hidden" aria-label="Abrir navegação" onClick={() => setMobileNav(!mobileNav)}><Menu /></Button><span className="text-sm text-muted-foreground">Área de trabalho</span><ChevronRight className="size-3 text-muted-foreground" /><span className="text-sm font-medium">Coleção</span></header>
+      <header className="flex h-16 items-center gap-3 border-b px-5 md:px-8"><Button variant="ghost" size="icon" className="md:hidden" aria-label="Abrir navegação" onClick={() => setMobileNav(!mobileNav)}><Menu /></Button><span className="text-sm text-muted-foreground">Área de trabalho</span><ChevronRight className="size-3 text-muted-foreground" /><span className="text-sm font-medium">Coleção</span><span className="ml-auto hidden text-xs text-muted-foreground sm:inline">{session.user.email}</span><Button variant="outline" size="sm" onClick={() => void signOut()}><LogOut /> Sair</Button></header>
       <main className="px-5 py-7 md:px-8 md:py-9">
         <div className="mb-7 flex flex-wrap items-center justify-between gap-4"><div><div className="mb-2 flex items-center gap-2 text-xs font-medium text-muted-foreground"><Layers className="size-4" /> COLEÇÕES</div><h1 className="text-2xl font-semibold md:text-3xl">Acompanhamento de coleção</h1></div><Button onClick={() => startEdit()}><Plus /> Adicionar coleção</Button></div>
         <div className="mb-5 flex items-center gap-2 border-b"><span className="inline-flex items-center gap-2 border-b-2 border-primary px-1 pb-3 text-sm font-medium text-primary"><Table2 className="size-4" /> Tabela de coleção</span></div>
