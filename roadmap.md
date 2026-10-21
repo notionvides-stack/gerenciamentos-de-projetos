@@ -1,5 +1,12 @@
 # Roadmap — Gerenciador de Projeto
 
+## Pedido atual — acompanhamento de coleção
+- [ ] Tela compacta com 19 colunas, busca, cadastro e edição sem exemplos.
+- [ ] Cliente isolado para a tabela externa existente, sem modificar o Cloud.
+- [ ] Verificar interface e testes; documentar credenciais/RLS pendentes.
+
+## Escopo anterior (fora do pedido atual)
+
 - [x] Ativar Lovable Cloud (banco, login, armazenamento)
 - [ ] Design system + layout com sidebar (Visão geral, Demandas, Acompanhamento de coleção, Equipe, Relatórios, Histórico, Configurações)
 - [ ] Login (admin/colaborador) com perfis e papéis em tabela separada
